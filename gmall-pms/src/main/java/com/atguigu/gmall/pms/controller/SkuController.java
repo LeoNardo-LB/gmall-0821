@@ -35,6 +35,12 @@ public class SkuController {
     @Autowired
     private SkuService skuService;
 
+    @GetMapping("/images/{skuId}")
+    public ResponseVo<List<String>> querySkuImages(@PathVariable Long skuId) {
+        List<String> imageList = skuService.querySkuImages(skuId);
+        return ResponseVo.ok(imageList);
+    }
+
     @GetMapping("/spu/{spuId}")
     public ResponseVo<List<SkuEntity>> getSkuListById(@PathVariable("spuId") Long spuId) {
         List<SkuEntity> skuEntities = skuService.list(new QueryWrapper<SkuEntity>().eq("spu_id", spuId));

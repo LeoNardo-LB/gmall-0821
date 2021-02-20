@@ -4,20 +4,20 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.controller.Dto.SmsSaveDto;
 import com.atguigu.gmall.pms.entity.*;
-import com.atguigu.gmall.pms.entity.Vo.SkuSaveVo;
-import com.atguigu.gmall.pms.entity.Vo.SpuSaveVo;
+import com.atguigu.gmall.pms.Vo.SkuSaveVo;
+import com.atguigu.gmall.pms.Vo.SpuSaveVo;
 import com.atguigu.gmall.pms.feign.GmallSmsFeignClient;
-import com.atguigu.gmall.pms.mapper.SkuMapper;
 import com.atguigu.gmall.pms.mapper.SpuMapper;
 import com.atguigu.gmall.pms.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.jsonwebtoken.lang.Collections;
+import io.seata.spring.annotation.GlobalTransactional;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service("spuService")
-@Transactional
+
 public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements SpuService {
 
     @Autowired
@@ -48,6 +48,9 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
 
     @Autowired
     GmallSmsFeignClient gmallSmsFeignClient;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
@@ -74,6 +77,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
         return new PageResultVo(page);
     }
 
+    @GlobalTransactional
     @Override
     public void bigSave(SpuSaveVo spuSaveVo) {
         SpuEntity spuEntity = new SpuEntity();
@@ -141,7 +145,17 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
             BeanUtils.copyProperties(item, smsSaveDto);
             smsSaveDto.setSkuId(skuId);
             gmallSmsFeignClient.saveSkuBounds(smsSaveDto);
+
+            // 制造错误，如果全局事务有效，则都不保存。
+            // int i = 10 / 0;
         });
+
+        // 4. 通过RabbitMQ 异步保存到ElasticSearch中
+        try {
+            rabbitTemplate.convertAndSend("ITEM_EXCHANGE", "item.*", spuId);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 
 }

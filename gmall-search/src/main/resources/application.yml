@@ -1,0 +1,41 @@
+server:
+  port: 18086
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        port: 8917
+        dashboard: localhost:8080
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1
+  elasticsearch:
+    rest:
+      uris: 192.168.72.132:9200
+  rabbitmq:
+    host: 192.168.72.132
+    port: 5672
+    virtual-host: /leo
+    username: leonardo
+    password: leonardo
+    listener:
+      simple:
+        acknowledge-mode: manual
+        prefetch: 1
+        concurrency: 4
+      type: simple
+
+
+feign:
+  sentinel:
+    enabled: true
+
+logging:
+  level:
+    root: info

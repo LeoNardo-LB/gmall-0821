@@ -1,24 +1,19 @@
 package com.atguigu.gmall.pms.controller;
 
-import java.util.List;
-
+import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.pms.entity.AttrEntity;
+import com.atguigu.gmall.pms.entity.SkuAttrValueEntity;
+import com.atguigu.gmall.pms.entity.SpuAttrValueEntity;
+import com.atguigu.gmall.pms.service.AttrService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.atguigu.gmall.pms.entity.AttrEntity;
-import com.atguigu.gmall.pms.service.AttrService;
-import com.atguigu.gmall.common.bean.PageResultVo;
-import com.atguigu.gmall.common.bean.ResponseVo;
-import com.atguigu.gmall.common.bean.PageParamVo;
+import java.util.List;
 
 /**
  * 商品属性
@@ -33,6 +28,18 @@ public class AttrController {
 
     @Autowired
     private AttrService attrService;
+
+    @GetMapping("/sku/searchType/{sid}")
+    public ResponseVo<List<SkuAttrValueEntity>> getSkuSearchTypeBySkuId(@PathVariable Long sid) {
+        List<SkuAttrValueEntity> list = attrService.getSkuSearchTypeBySkuId(sid);
+        return ResponseVo.ok(list);
+    }
+
+    @GetMapping("/spu/searchType/{sid}")
+    public ResponseVo<List<SpuAttrValueEntity>> getSpuSearchTypeBySpuId(@PathVariable Long sid) {
+        List<SpuAttrValueEntity> list = attrService.getSpuSearchTypeBySpuId(sid);
+        return ResponseVo.ok(list);
+    }
 
     @GetMapping("/category/{cid}")
     public ResponseVo<List<AttrEntity>> getAttrOfCategory(@PathVariable("cid") Long cid,

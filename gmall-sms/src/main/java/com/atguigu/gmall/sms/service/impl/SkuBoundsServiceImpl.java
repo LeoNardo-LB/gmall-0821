@@ -1,5 +1,6 @@
 package com.atguigu.gmall.sms.service.impl;
 
+import com.atguigu.gmall.controller.Dto.ItemSaleVo;
 import com.atguigu.gmall.controller.Dto.SmsSaveDto;
 import com.atguigu.gmall.sms.entity.SkuFullReductionEntity;
 import com.atguigu.gmall.sms.entity.SkuLadderEntity;
@@ -9,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +70,29 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBounds
         skuBoundsService.save(skuBoundsEntity);
         skuFullReductionService.save(skuFullReductionEntity);
         skuLadderService.save(skuLadderEntity);
+    }
+
+    @Override
+    public List<ItemSaleVo> getSaleStrategyBySkuId(Long skuId) {
+        ArrayList<ItemSaleVo> itemSaleVos = new ArrayList<>();
+        // 获取成长积分与购物积分策略
+        SkuBoundsEntity skuBoundsEntity = skuBoundsService.getOne(new QueryWrapper<SkuBoundsEntity>().eq("sku_id", skuId));
+        if (skuBoundsEntity != null) {
+            itemSaleVos.add(new ItemSaleVo().setType("积分").setDesc("购物积分" + skuBoundsEntity.getBuyBounds() + ", 成长积分" + skuBoundsEntity.getGrowBounds()));
+        }
+
+        // 获取商品满减策略
+        SkuFullReductionEntity skuFullReductionEntity = skuFullReductionService.getOne(new QueryWrapper<SkuFullReductionEntity>().eq("sku_id", skuId));
+        if (skuFullReductionEntity != null) {
+            itemSaleVos.add(new ItemSaleVo().setType("满减").setDesc("满" + skuFullReductionEntity.getFullPrice() + "减" + skuFullReductionEntity.getReducePrice()));
+        }
+
+        // 获取商品阶梯价格策略
+        SkuLadderEntity skuLadderEntity = skuLadderService.getOne(new QueryWrapper<SkuLadderEntity>().eq("sku_id", skuId));
+        if (skuLadderEntity != null) {
+            itemSaleVos.add(new ItemSaleVo().setType("价格阶梯").setDesc("买" + skuLadderEntity.getFullCount() + "件打" + skuLadderEntity.getDiscount() + "折~"));
+        }
+        return itemSaleVos;
     }
 
 }

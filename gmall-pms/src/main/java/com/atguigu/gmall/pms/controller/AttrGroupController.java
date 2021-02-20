@@ -1,23 +1,17 @@
 package com.atguigu.gmall.pms.controller;
 
-import java.util.List;
-
+import com.atguigu.gmall.common.bean.PageParamVo;
+import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.pms.entity.AttrGroupEntity;
+import com.atguigu.gmall.pms.entity.ItemGroupVo;
+import com.atguigu.gmall.pms.service.AttrGroupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.atguigu.gmall.pms.entity.AttrGroupEntity;
-import com.atguigu.gmall.pms.service.AttrGroupService;
-import com.atguigu.gmall.common.bean.PageResultVo;
-import com.atguigu.gmall.common.bean.ResponseVo;
-import com.atguigu.gmall.common.bean.PageParamVo;
+import java.util.List;
 
 /**
  * 属性分组
@@ -41,10 +35,18 @@ public class AttrGroupController {
 
     @GetMapping("/withattrs/{catId}")
     public ResponseVo<List<AttrGroupEntity>> getAttrsAndGroup(@PathVariable Long catId,
-                                                              @RequestParam(value = "type",required = false) Integer type,
+                                                              @RequestParam(value = "type", required = false) Integer type,
                                                               @RequestParam(value = "searchType", required = false) Integer searchType) {
-        List<AttrGroupEntity> entityList = attrGroupService.getAttrsAndGroup(catId,type,searchType);
+        List<AttrGroupEntity> entityList = attrGroupService.getAttrsAndGroup(catId, type, searchType);
         return ResponseVo.ok(entityList);
+    }
+
+    @GetMapping("/sku/spu/{categoryId}")
+    public ResponseVo<List<ItemGroupVo>> queryAttrGroupBySkuSpuCategory(@PathVariable Long categoryId,
+                                                                        @RequestParam("skuId") Long skuId,
+                                                                        @RequestParam("spuId") Long spuId) {
+        List<ItemGroupVo> list = attrGroupService.queryAttrGroupBySkuSpuCategory(categoryId, skuId, spuId);
+        return ResponseVo.ok(list);
     }
 
     /**

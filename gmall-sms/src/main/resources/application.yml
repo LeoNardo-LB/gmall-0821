@@ -1,6 +1,5 @@
 server:
   port: 18083
-
 spring:
   cloud:
     nacos:
@@ -10,6 +9,9 @@ spring:
       transport:
         dashboard: localhost:8080
         port: 8719
+    alibaba:
+      seata:
+        tx-service-group: gmall-tx-group
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.72.132:3306/guli_sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false

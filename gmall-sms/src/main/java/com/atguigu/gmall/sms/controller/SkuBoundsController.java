@@ -4,6 +4,7 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.controller.Api.GmallSmsApi;
+import com.atguigu.gmall.controller.Dto.ItemSaleVo;
 import com.atguigu.gmall.controller.Dto.SmsSaveDto;
 import com.atguigu.gmall.sms.entity.SkuBoundsEntity;
 import com.atguigu.gmall.sms.service.SkuBoundsService;
@@ -27,6 +28,12 @@ public class SkuBoundsController {
 
     @Autowired
     private SkuBoundsService skuBoundsService;
+
+    @GetMapping("/sale/strategy/{skuId}")
+    public ResponseVo<List<ItemSaleVo>> getSaleStrategyBySkuId(@PathVariable Long skuId){
+        List<ItemSaleVo> list = skuBoundsService.getSaleStrategyBySkuId(skuId);
+        return ResponseVo.ok(list);
+    }
 
     /**
      * 列表

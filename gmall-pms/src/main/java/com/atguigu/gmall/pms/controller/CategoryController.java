@@ -34,6 +34,17 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("/level123/{cid}")
+    public ResponseVo<List<CategoryEntity>> queryLevel123CategoriesByCid(@PathVariable Long cid) {
+        List<CategoryEntity> list = categoryService.queryLevel123CategoriesByCid(cid);
+        return ResponseVo.ok(list);
+    }
+
+    @GetMapping("/level23/{pid}")
+    public List<CategoryEntity> queryLevel23Categories(@PathVariable Long pid) {
+        return categoryService.queryLevel23Categories(pid);
+    }
+
     // api.gmall.com/pms/category/parent/-1
     @GetMapping("/parent/{pid}")
     public ResponseVo<List<CategoryEntity>> queryCategory(@PathVariable("pid") Long pid) {

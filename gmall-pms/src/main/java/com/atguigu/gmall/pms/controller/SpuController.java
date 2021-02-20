@@ -4,7 +4,7 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.SpuEntity;
-import com.atguigu.gmall.pms.entity.Vo.SpuSaveVo;
+import com.atguigu.gmall.pms.Vo.SpuSaveVo;
 import com.atguigu.gmall.pms.service.SpuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,12 +29,17 @@ public class SpuController {
 
     @GetMapping("/category/{categoryId}")
     public ResponseVo<PageResultVo> getSpuEntity(@PathVariable("categoryId") Long categoryId,
-                                                    PageParamVo paramVo) {
+                                                 PageParamVo paramVo) {
         PageResultVo pageResultVo = spuService.getSpuEntityByCondition(categoryId, paramVo);
         return ResponseVo.ok(pageResultVo);
     }
 
-
+    @ApiOperation("远程接口，用于获取Spu分页数据")
+    @PostMapping("/json")
+    public ResponseVo<List<SpuEntity>> querySpuByPageJson(@RequestBody PageParamVo paramVo) {
+        PageResultVo pageResultVo = spuService.queryPage(paramVo);
+        return ResponseVo.ok((List<SpuEntity>) pageResultVo.getList());
+    }
 
     /**
      * 列表
