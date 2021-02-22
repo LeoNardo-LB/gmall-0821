@@ -34,8 +34,8 @@ class SkuAttrValueServiceImplTest {
 
     @Test
     public void testSkuAttrMapping(){
-        String s = skuAttrValueService.querySkuAttrMapping(45l);
-        System.out.println("s = " + s);
+        String s = skuAttrValueService.querySkuAttrMapping(10l);
+        System.out.println(s);
     }
 
 }

@@ -9,7 +9,6 @@ import java.util.Map;
 
 /**
  * 用户表
- *
  * @author leonardo
  * @email tfr971018@163.com
  * @date 2021-01-18 20:22:44
@@ -17,5 +16,14 @@ import java.util.Map;
 public interface UserService extends IService<UserEntity> {
 
     PageResultVo queryPage(PageParamVo paramVo);
+
+    Boolean checkUniqueness(String data, Integer type);
+
+    void sendValidateCode(String phone, Integer type);
+
+    void userRegister(UserEntity userEntity, String code);
+
+    String userLogin(String loginName, String password);
+
 }
 

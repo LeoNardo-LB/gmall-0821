@@ -20,7 +20,7 @@ class SkuBoundsServiceImplTest {
 
     @Test
     void getSaleStrategyBySkuId() {
-        List<ItemSaleVo> saleStrategyBySkuId = skuBoundsService.getSaleStrategyBySkuId(37l);
+        List<ItemSaleVo> saleStrategyBySkuId = skuBoundsService.getSaleStrategyBySkuId(3l);
         System.out.println(saleStrategyBySkuId);
     }
 

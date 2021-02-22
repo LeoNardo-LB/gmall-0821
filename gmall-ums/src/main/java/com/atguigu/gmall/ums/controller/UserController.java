@@ -21,7 +21,6 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 
 /**
  * 用户表
- *
  * @author leonardo
  * @email tfr971018@163.com
  * @date 2021-01-18 20:22:44
@@ -35,24 +34,69 @@ public class UserController {
     private UserService userService;
 
     /**
+     * 检查唯一性
+     * @param data
+     * @param type
+     * @return 可用返回true，不可用返回false
+     */
+    @GetMapping("check/{data}/{type}")
+    public ResponseVo<Boolean> checkUniqueness(@PathVariable String data, @PathVariable Integer type) {
+        Boolean isUnique = userService.checkUniqueness(data, type);
+        return ResponseVo.ok(isUnique);
+    }
+
+    /**
+     * 发送验证码
+     * @param phone
+     * @return
+     */
+    @PostMapping("/code")
+    public ResponseVo<Void> sendValidateCode(@RequestParam("phone") String phone, @RequestParam(defaultValue = "3") Integer type) {
+        userService.sendValidateCode(phone, type);
+        return ResponseVo.ok();
+    }
+
+    /**
+     * 用户注册
+     * @param userEntity
+     * @param code
+     * @return
+     */
+    @PostMapping("/register")
+    public ResponseVo<String> userRegister(UserEntity userEntity, @RequestParam("code") String code) {
+        try {
+            userService.userRegister(userEntity, code);
+        } catch (RuntimeException e) {
+            return ResponseVo.fail(e.getMessage());
+        }
+        return ResponseVo.ok();
+    }
+
+    @GetMapping("/query")
+    public ResponseVo<String> userLogin(@RequestParam("loginName") String loginName,
+                                        @RequestParam("password") String password) {
+        String userJson = userService.userLogin(loginName, password);
+        return ResponseVo.ok(userJson);
+    }
+
+    /**
      * 列表
      */
     @GetMapping
     @ApiOperation("分页查询")
-    public ResponseVo<PageResultVo> queryUserByPage(PageParamVo paramVo){
+    public ResponseVo<PageResultVo> queryUserByPage(PageParamVo paramVo) {
         PageResultVo pageResultVo = userService.queryPage(paramVo);
 
         return ResponseVo.ok(pageResultVo);
     }
-
 
     /**
      * 信息
      */
     @GetMapping("{id}")
     @ApiOperation("详情查询")
-    public ResponseVo<UserEntity> queryUserById(@PathVariable("id") Long id){
-		UserEntity user = userService.getById(id);
+    public ResponseVo<UserEntity> queryUserById(@PathVariable("id") Long id) {
+        UserEntity user = userService.getById(id);
 
         return ResponseVo.ok(user);
     }
@@ -62,8 +106,8 @@ public class UserController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody UserEntity user){
-		userService.save(user);
+    public ResponseVo<Object> save(@RequestBody UserEntity user) {
+        userService.save(user);
 
         return ResponseVo.ok();
     }
@@ -73,8 +117,8 @@ public class UserController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public ResponseVo update(@RequestBody UserEntity user){
-		userService.updateById(user);
+    public ResponseVo update(@RequestBody UserEntity user) {
+        userService.updateById(user);
 
         return ResponseVo.ok();
     }
@@ -84,8 +128,8 @@ public class UserController {
      */
     @PostMapping("/delete")
     @ApiOperation("删除")
-    public ResponseVo delete(@RequestBody List<Long> ids){
-		userService.removeByIds(ids);
+    public ResponseVo delete(@RequestBody List<Long> ids) {
+        userService.removeByIds(ids);
 
         return ResponseVo.ok();
     }

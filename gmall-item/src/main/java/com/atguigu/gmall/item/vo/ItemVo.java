@@ -5,6 +5,7 @@ import com.atguigu.gmall.pms.entity.CategoryEntity;
 import com.atguigu.gmall.pms.entity.ItemGroupVo;
 import com.atguigu.gmall.pms.entity.SaleAttrValueVo;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Map;
  * Create: 2021/2/19
  **/
 @Data
+@Accessors(chain = true)
 public class ItemVo {
 
     // 面包屑部分
@@ -42,7 +44,7 @@ public class ItemVo {
 
     private Integer weight;
 
-    private String defaltImage;
+    private String defaultImage;
 
     private List<String> images;
 
@@ -70,6 +72,5 @@ public class ItemVo {
 
     // 规格参数组及组下的规格参数(带值)
     private List<ItemGroupVo> groups;
-
 
 }

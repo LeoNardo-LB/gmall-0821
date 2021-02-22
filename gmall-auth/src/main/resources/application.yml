@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gmall-auth
+  cloud:
+    nacos:
+      discovery:
+        namespace: public
+        password: nacos
+        server-addr: mse-6d50f4f0-p.nacos-ans.mse.aliyuncs.com:8848
+        username: nacos
+    sentinel:
+      eager: true
+      transport:
+        dashboard: localhost:8080
+  thymeleaf:
+    cache: true
+    check-template: true
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    excluded-view-names: ''
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html

@@ -1,0 +1,24 @@
+server:
+  port: 19001
+spring:
+  rabbitmq:
+    host: 192.168.72.132
+    port: 5672
+    virtual-host: /leo
+    username: leonardo
+    password: leonardo
+    listener:
+      type: simple
+      simple:
+        concurrency: 4
+        acknowledge-mode: manual
+        prefetch: 1
+  redis:
+    host: 192.168.72.132
+    port: 6379
+
+aliyun:
+  accessKey: LTAI4GG5njeUFtbYG9avjfk8
+  accessSecret: F65LJ35Sx8EKwJ0KI71B4Wxx9kn6zO
+  signName: Leonardo服务器
+  templateCode: SMS_205891755
