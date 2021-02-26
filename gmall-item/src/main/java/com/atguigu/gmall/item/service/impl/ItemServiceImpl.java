@@ -3,15 +3,14 @@ package com.atguigu.gmall.item.service.impl;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.controller.Dto.ItemSaleVo;
 import com.atguigu.gmall.item.feign.PmsFeignClient;
-import com.atguigu.gmall.item.feign.SmsFeignClient;
-import com.atguigu.gmall.item.feign.WmsFeignClient;
+import com.atguigu.gmall.item.feign.SmsGmallFeignClient;
+import com.atguigu.gmall.item.feign.WmsGmallFeignClient;
 import com.atguigu.gmall.item.service.ItemService;
 import com.atguigu.gmall.item.vo.ItemVo;
 import com.atguigu.gmall.pms.entity.*;
 import com.atguigu.gmall.wms.entity.WareSkuEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.util.AuthResources_it;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -31,10 +30,10 @@ public class ItemServiceImpl implements ItemService {
     PmsFeignClient pmsFeignClient;
 
     @Autowired
-    SmsFeignClient smsFeignClient;
+    SmsGmallFeignClient smsFeignClient;
 
     @Autowired
-    WmsFeignClient wmsFeignClient;
+    WmsGmallFeignClient wmsFeignClient;
 
     @Override
     public ItemVo itemDetailsPackaging(Long skuId) {

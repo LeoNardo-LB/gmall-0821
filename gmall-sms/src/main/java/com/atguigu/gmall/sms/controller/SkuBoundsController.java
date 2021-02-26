@@ -3,7 +3,6 @@ package com.atguigu.gmall.sms.controller;
 import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
-import com.atguigu.gmall.controller.Api.GmallSmsApi;
 import com.atguigu.gmall.controller.Dto.ItemSaleVo;
 import com.atguigu.gmall.controller.Dto.SmsSaveDto;
 import com.atguigu.gmall.sms.entity.SkuBoundsEntity;

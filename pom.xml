@@ -25,6 +25,7 @@
         <module>gmall-wms-interface</module>
         <module>short-message-service-interface</module>
         <module>gmall-ums-interface</module>
+        <module>gmall-cart-interface</module>
     </modules>
 
     <properties>

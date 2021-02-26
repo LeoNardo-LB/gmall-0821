@@ -72,6 +72,12 @@ public class UserController {
         return ResponseVo.ok();
     }
 
+    /**
+     * 查询用户信息
+     * @param loginName
+     * @param password
+     * @return
+     */
     @GetMapping("/query")
     public ResponseVo<String> userLogin(@RequestParam("loginName") String loginName,
                                         @RequestParam("password") String password) {

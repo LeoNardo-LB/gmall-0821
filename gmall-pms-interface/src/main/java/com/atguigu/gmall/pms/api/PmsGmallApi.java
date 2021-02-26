@@ -3,7 +3,7 @@ package com.atguigu.gmall.pms.api;
 import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.*;
-import io.swagger.annotations.ApiOperation;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +45,6 @@ public interface PmsGmallApi {
      */
     @GetMapping("pms/sku/{id}")
     public ResponseVo<SkuEntity> querySkuById(@PathVariable("id") Long id);
-
 
     /**
      * 根据sku中的三级分类id查询一二三级分类
@@ -114,6 +113,9 @@ public interface PmsGmallApi {
      */
     @GetMapping("pms/spudesc/{spuId}")
     public ResponseVo<SpuDescEntity> querySpuDescById(@PathVariable("spuId") Long spuId);
+
+    @GetMapping("pms/skuattrvalue/list/{skuId}")
+    public ResponseVo<List<SkuAttrValueEntity>> queryAttrValueEntitysBySkuId(@PathVariable Long skuId);
 
     @GetMapping("pms/attr/spu/searchType/{sid}")
     public ResponseVo<List<SpuAttrValueEntity>> getSpuSearchTypeBySpuId(@PathVariable Long sid);

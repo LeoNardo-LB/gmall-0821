@@ -5,7 +5,7 @@ import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.*;
 import com.atguigu.gmall.search.entity.*;
 import com.atguigu.gmall.search.feign.PmsFeignClient;
-import com.atguigu.gmall.search.feign.WmsFeignClient;
+import com.atguigu.gmall.search.feign.WmsGmallFeignClient;
 import com.atguigu.gmall.search.mapper.GoodsRepository;
 import com.atguigu.gmall.search.service.SearchService;
 import com.atguigu.gmall.wms.entity.WareSkuEntity;
@@ -56,7 +56,7 @@ public class SearchServiceImpl implements SearchService {
     PmsFeignClient pmsFeignClient;
 
     @Autowired
-    WmsFeignClient wmsFeignClient;
+    WmsGmallFeignClient wmsFeignClient;
 
     @Override
     public SearchResponseVo search(SearchParamVo searchParam) {

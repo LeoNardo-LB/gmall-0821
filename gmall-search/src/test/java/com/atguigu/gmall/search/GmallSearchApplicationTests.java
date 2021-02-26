@@ -1,22 +1,19 @@
 package com.atguigu.gmall.search;
 
 import com.atguigu.gmall.common.bean.PageParamVo;
-import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.*;
 import com.atguigu.gmall.search.entity.Goods;
 import com.atguigu.gmall.search.entity.SearchAttrValue;
 import com.atguigu.gmall.search.feign.PmsFeignClient;
-import com.atguigu.gmall.search.feign.WmsFeignClient;
+import com.atguigu.gmall.search.feign.WmsGmallFeignClient;
 import com.atguigu.gmall.search.mapper.GoodsRepository;
 import com.atguigu.gmall.wms.entity.WareSkuEntity;
 import io.jsonwebtoken.lang.Collections;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +31,7 @@ class GmallSearchApplicationTests {
     PmsFeignClient pmsFeignClient;
 
     @Autowired
-    WmsFeignClient wmsFeignClient;
+    WmsGmallFeignClient wmsFeignClient;
 
     @Test
     public void importData() {

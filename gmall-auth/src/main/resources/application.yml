@@ -1,27 +1,36 @@
 server:
-  port: 8080
+  port: 18089
+
 spring:
-  application:
-    name: gmall-auth
   cloud:
     nacos:
       discovery:
-        namespace: public
-        password: nacos
-        server-addr: mse-6d50f4f0-p.nacos-ans.mse.aliyuncs.com:8848
-        username: nacos
+        server-addr: localhost:8848
     sentinel:
       eager: true
       transport:
         dashboard: localhost:8080
+        port: 8719
   thymeleaf:
-    cache: true
-    check-template: true
-    check-template-location: true
-    content-type: text/html
+    cache: false
+  zipkin:
+    base-url: http://localhost:9411/
+    sender:
+      type: web
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1
+
+feign:
+  sentinel:
     enabled: true
-    encoding: UTF-8
-    excluded-view-names: ''
-    mode: HTML5
-    prefix: classpath:/templates/
-    suffix: .html
+
+auth:
+  jwt:
+    pubKeyPath: E:/_Code_/atguigu/20 gmall/gmall-0821/rsa/rsa.pub
+    priKeyPath: E:/_Code_/atguigu/20 gmall/gmall-0821/rsa/rsa.pri
+    secret: 30489ouerweljrLROE@#)(@$*343jlsdf
+    cookieName: GMALL-TOKEN
+    expire: 180
+    unick: unick

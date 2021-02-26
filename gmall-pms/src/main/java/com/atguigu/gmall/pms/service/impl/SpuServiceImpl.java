@@ -6,7 +6,7 @@ import com.atguigu.gmall.controller.Dto.SmsSaveDto;
 import com.atguigu.gmall.pms.entity.*;
 import com.atguigu.gmall.pms.Vo.SkuSaveVo;
 import com.atguigu.gmall.pms.Vo.SpuSaveVo;
-import com.atguigu.gmall.pms.feign.GmallSmsFeignClient;
+import com.atguigu.gmall.pms.feign.SmsGmallFeignClient;
 import com.atguigu.gmall.pms.mapper.SpuMapper;
 import com.atguigu.gmall.pms.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -47,7 +47,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     SkuImagesService skuImagesService;
 
     @Autowired
-    GmallSmsFeignClient gmallSmsFeignClient;
+    SmsGmallFeignClient gmallSmsFeignClient;
 
     @Autowired
     RabbitTemplate rabbitTemplate;

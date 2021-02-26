@@ -47,3 +47,18 @@ spring:
           uri: lb://item-service
           predicates:
             - Host=item.gmall.com
+#          filters:
+#            - Auth
+        - id: auth-router
+          uri: lb://auth-service
+          predicates:
+            - Host=sso.gmall.com
+        - id: cart-router
+          uri: lb://cart-service
+          predicates:
+            - Host=cart.gmall.com
+
+auth:
+  jwt:
+    pubKeyPath: E:/_Code_/atguigu/20 gmall/gmall-0821/rsa/rsa.pub
+    cookieName: GMALL-TOKEN

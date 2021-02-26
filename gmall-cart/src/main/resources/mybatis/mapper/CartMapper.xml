@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.gmall.cart.mapper.CartMapper">
+
+    <insert id="insertBatch">
+        insert into cart_info
+        (`user_id`, `sku_id`, `check`, `title`,`default_image`,`price`,`count`,`store`,`sale_attrs`,`sales`)
+        values
+        <foreach collection="cartList" separator="," item="cart">
+            (#{cart.userId},#{cart.skuId},#{cart.check},#{cart.title},#{cart.defaultImage},#{cart.price},#{cart.count},#{cart.store},#{cart.saleAttrs},#{cart.sales})
+        </foreach>
+    </insert>
+</mapper>
