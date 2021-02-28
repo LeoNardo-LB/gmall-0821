@@ -21,7 +21,7 @@ class CartServiceImplTest {
 
     @Test
     void updateRealTimePrice() {
-        cartService.updateRealTimePrice(10l, new BigDecimal("5001"));
+        cartService.updateRealTimePrice(10l, new BigDecimal("2000"));
     }
 
 }
