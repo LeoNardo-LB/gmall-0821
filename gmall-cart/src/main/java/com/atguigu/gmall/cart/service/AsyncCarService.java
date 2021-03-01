@@ -18,4 +18,6 @@ public interface AsyncCarService {
 
     void removeByMap(Map<String, String> map);
 
+    void updateCheckStatus(Cart cart);
+
 }

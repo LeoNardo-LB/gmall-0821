@@ -7,6 +7,7 @@ import com.atguigu.gmall.cart.feign.GmallPmsClient;
 import com.atguigu.gmall.cart.feign.GmallSmsClient;
 import com.atguigu.gmall.cart.feign.GmallWmsClient;
 import com.atguigu.gmall.cart.interceptor.LoginInterceptor;
+import com.atguigu.gmall.cart.mapper.CartMapper;
 import com.atguigu.gmall.cart.service.CartService;
 import com.atguigu.gmall.cart.service.AsyncCarService;
 import com.atguigu.gmall.common.bean.ResponseVo;
@@ -14,6 +15,7 @@ import com.atguigu.gmall.controller.Dto.ItemSaleVo;
 import com.atguigu.gmall.pms.entity.SkuAttrValueEntity;
 import com.atguigu.gmall.pms.entity.SkuEntity;
 import com.atguigu.gmall.wms.entity.WareSkuEntity;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
@@ -51,6 +53,18 @@ public class CartServiceImpl implements CartService {
 
     private static final String REDIS_SKU_PRICE_PREFIX = "cart:price:";
 
+    public List<Cart> queryCheckedCart(String userId) {
+        BoundHashOperations<String, Object, Object> hashOps = stringRedisTemplate.boundHashOps(REDIS_CART_PREFIX + userId);
+        List<Cart> carts = hashOps.entries().entrySet().stream()
+                                   .map(entry -> JSON.parseObject(entry.getValue().toString(), Cart.class))
+                                   .filter(Cart::getCheck).collect(Collectors.toList());
+        return carts;
+    }
+
+    /**
+     * 增加购物车内容
+     * @param cart
+     */
     @Override
     public void addCart(Cart cart) {
         if (cart == null || cart.getCount() == null || cart.getCount().intValue() == 0) {
@@ -260,6 +274,32 @@ public class CartServiceImpl implements CartService {
     public void updateRealTimePrice(Long skuId, BigDecimal price) {
         String key = REDIS_SKU_PRICE_PREFIX + skuId.toString();
         stringRedisTemplate.opsForValue().set(key, price.toString());
+    }
+
+    @Override
+    public void updateCheckStatus(String skuId, Boolean check) {
+        if (skuId == null) {
+            return;
+        }
+        // 1. 获取UserInfo
+        UserInfo userInfo = LoginInterceptor.getUserInfo();
+        String userId = userInfo.getUserId();
+
+        // 2. 判断登陆状态，未登录用userKey，登录用userId
+        String key = userId;
+        if (StringUtils.isBlank(userId)) {
+            key = userInfo.getUserKey();
+        }
+        String redisKey = REDIS_CART_PREFIX + key;
+        BoundHashOperations<String, Object, Object> hashOps = stringRedisTemplate.boundHashOps(redisKey);
+        Cart cart = JSON.parseObject(hashOps.get(skuId).toString(), Cart.class);
+        cart.setCheck(check);
+
+        // 3. 同步更新Redis中的数据
+        hashOps.put(skuId, JSON.toJSONString(cart));
+
+        // 4. 异步更新MySQL中的数据
+        asyncCarService.updateCheckStatus(cart);
     }
 
 }

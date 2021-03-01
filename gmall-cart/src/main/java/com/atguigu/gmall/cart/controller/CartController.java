@@ -1,6 +1,7 @@
 package com.atguigu.gmall.cart.controller;
 
 import com.atguigu.gmall.cart.entity.Cart;
+import com.atguigu.gmall.cart.entity.CheckVo;
 import com.atguigu.gmall.cart.service.CartService;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,20 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
+    @ResponseBody
+    @PostMapping("/updateStatus")
+    public ResponseVo updateCheckStatus(@RequestBody CheckVo checkVo) {
+        cartService.updateCheckStatus(checkVo.getSkuId(), checkVo.getCheck());
+        return ResponseVo.ok();
+    }
+
+    @ResponseBody
+    @GetMapping("/cart/checked/{userId}")
+    public ResponseVo<List<Cart>> queryCheckedCarts(@PathVariable String userId) {
+        List<Cart> carts = cartService.queryCheckedCart(userId);
+        return ResponseVo.ok(carts);
+    }
 
     /**
      * 添加购物车成功，重定向到购物车成功页

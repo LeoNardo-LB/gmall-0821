@@ -3,8 +3,8 @@ package com.atguigu.gmall.item.service.impl;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.controller.Dto.ItemSaleVo;
 import com.atguigu.gmall.item.feign.PmsFeignClient;
-import com.atguigu.gmall.item.feign.SmsGmallFeignClient;
-import com.atguigu.gmall.item.feign.WmsGmallFeignClient;
+import com.atguigu.gmall.item.feign.SmsFeignClient;
+import com.atguigu.gmall.item.feign.WmsFeignClient;
 import com.atguigu.gmall.item.service.ItemService;
 import com.atguigu.gmall.item.vo.ItemVo;
 import com.atguigu.gmall.pms.entity.*;
@@ -30,10 +30,10 @@ public class ItemServiceImpl implements ItemService {
     PmsFeignClient pmsFeignClient;
 
     @Autowired
-    SmsGmallFeignClient smsFeignClient;
+    SmsFeignClient smsFeignClient;
 
     @Autowired
-    WmsGmallFeignClient wmsFeignClient;
+    WmsFeignClient wmsFeignClient;
 
     @Override
     public ItemVo itemDetailsPackaging(Long skuId) {

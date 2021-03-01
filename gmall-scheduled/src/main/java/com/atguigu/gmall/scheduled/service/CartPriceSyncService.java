@@ -6,6 +6,6 @@ package com.atguigu.gmall.scheduled.service;
  **/
 public interface CartPriceSyncService {
 
-    boolean syncPrice();
+    void syncPrice();
 
 }

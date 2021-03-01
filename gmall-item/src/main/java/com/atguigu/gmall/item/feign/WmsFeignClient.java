@@ -8,6 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * Create: 2021/2/20
  **/
 @FeignClient("wms-service")
-public interface WmsGmallFeignClient extends WmsGmallApi {
+public interface WmsFeignClient extends WmsGmallApi {
 
 }

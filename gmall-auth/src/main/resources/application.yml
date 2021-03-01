@@ -34,3 +34,4 @@ auth:
     cookieName: GMALL-TOKEN
     expire: 180
     unick: unick
+

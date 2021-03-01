@@ -46,3 +46,7 @@ mybatis-plus:
 feign:
   sentinel:
     enabled: true
+
+logging:
+  level:
+    com.atguigu.gmall.ums.mapper: debug

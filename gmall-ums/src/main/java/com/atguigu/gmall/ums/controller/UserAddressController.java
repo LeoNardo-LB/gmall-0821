@@ -2,6 +2,7 @@ package com.atguigu.gmall.ums.controller;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 
 /**
  * 收货地址表
- *
  * @author leonardo
  * @email tfr971018@163.com
  * @date 2021-01-18 20:22:44
@@ -33,25 +33,31 @@ public class UserAddressController {
     @Autowired
     private UserAddressService userAddressService;
 
+    @GetMapping("/query/userId/{userId}")
+    public ResponseVo<List<UserAddressEntity>> queryByUserId(@PathVariable String userId) {
+
+        List<UserAddressEntity> list = userAddressService.list(new QueryWrapper<UserAddressEntity>().eq("user_id", userId));
+        return ResponseVo.ok(list);
+    }
+
     /**
      * 列表
      */
     @GetMapping
     @ApiOperation("分页查询")
-    public ResponseVo<PageResultVo> queryUserAddressByPage(PageParamVo paramVo){
+    public ResponseVo<PageResultVo> queryUserAddressByPage(PageParamVo paramVo) {
         PageResultVo pageResultVo = userAddressService.queryPage(paramVo);
 
         return ResponseVo.ok(pageResultVo);
     }
-
 
     /**
      * 信息
      */
     @GetMapping("{id}")
     @ApiOperation("详情查询")
-    public ResponseVo<UserAddressEntity> queryUserAddressById(@PathVariable("id") Long id){
-		UserAddressEntity userAddress = userAddressService.getById(id);
+    public ResponseVo<UserAddressEntity> queryUserAddressById(@PathVariable("id") Long id) {
+        UserAddressEntity userAddress = userAddressService.getById(id);
 
         return ResponseVo.ok(userAddress);
     }
@@ -61,8 +67,8 @@ public class UserAddressController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody UserAddressEntity userAddress){
-		userAddressService.save(userAddress);
+    public ResponseVo<Object> save(@RequestBody UserAddressEntity userAddress) {
+        userAddressService.save(userAddress);
 
         return ResponseVo.ok();
     }
@@ -72,8 +78,8 @@ public class UserAddressController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public ResponseVo update(@RequestBody UserAddressEntity userAddress){
-		userAddressService.updateById(userAddress);
+    public ResponseVo update(@RequestBody UserAddressEntity userAddress) {
+        userAddressService.updateById(userAddress);
 
         return ResponseVo.ok();
     }
@@ -83,8 +89,8 @@ public class UserAddressController {
      */
     @PostMapping("/delete")
     @ApiOperation("删除")
-    public ResponseVo delete(@RequestBody List<Long> ids){
-		userAddressService.removeByIds(ids);
+    public ResponseVo delete(@RequestBody List<Long> ids) {
+        userAddressService.removeByIds(ids);
 
         return ResponseVo.ok();
     }

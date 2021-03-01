@@ -8,6 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * Create: 2021/2/20
  **/
 @FeignClient("sms-service")
-public interface SmsGmallFeignClient extends SmsGmallApi {
+public interface SmsFeignClient extends SmsGmallApi {
 
 }

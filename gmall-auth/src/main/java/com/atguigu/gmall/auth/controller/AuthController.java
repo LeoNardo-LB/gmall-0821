@@ -49,8 +49,10 @@ public class AuthController {
         try {
             authService.accreditation(loginName, password, request, response);
         } catch (UserException e) {
+            e.printStackTrace();
             log.warn("用户登陆失败！用户名为: {} \t 密码为: {}", loginName, password);
-            return "login";
+            throw new UserException("登录失败！用户名或密码有误");
+            // return "login";
         }
         return "redirect:" + returnUrl;
     }

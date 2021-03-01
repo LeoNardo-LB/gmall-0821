@@ -65,4 +65,11 @@ public class AsyncCarServiceImpl implements AsyncCarService {
         }
     }
 
+    @Override
+    @Async
+    public void updateCheckStatus(Cart cart) {
+        QueryWrapper<Cart> wrapper = new QueryWrapper<Cart>().eq("user_id", cart.getUserId()).eq("sku_id", cart.getSkuId());
+        cartMapper.update(cart, wrapper);
+    }
+
 }

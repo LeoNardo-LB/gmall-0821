@@ -40,6 +40,7 @@ feign:
     enabled: true
 
 
+
 auth:
   jwt:
     pubKeyPath: E:/_Code_/atguigu/20 gmall/gmall-0821/rsa/rsa.pub
@@ -48,3 +49,6 @@ auth:
     expireTime: 15552000 # userKey的过期时间
 mybatis-plus:
   mapper-locations: classpath:mybatis/mapper/*.xml
+logging:
+  level:
+    com.atguigu.gmall.cart.mapper: debug

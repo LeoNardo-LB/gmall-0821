@@ -1,6 +1,7 @@
 package com.atguigu.gmall.cart.service;
 
 import com.atguigu.gmall.cart.entity.Cart;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
  * Create: 2021/2/24
  **/
 public interface CartService {
+
+    List<Cart> queryCheckedCart(String userId);
 
     void addCart(Cart cart);
 
@@ -22,5 +25,7 @@ public interface CartService {
     void deleteCart(Long skuId);
 
     void updateRealTimePrice(Long skuId, BigDecimal price);
+
+    void updateCheckStatus(String skuId, Boolean check);
 
 }
